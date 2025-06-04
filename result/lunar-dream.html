@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ผลลัพธ์ของคุณ | Dreamcarver</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f0f4ff, #e2e8f0);
+      font-family: 'Sarabun', sans-serif;
+    }
+    .butterfly-shadow {
+      filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <!-- background music with fade-out -->
+  <audio id="bgm" autoplay muted playsinline>
+    <source src="../audio/lunar-dream-theme.mp3">
+  </audio>
+  <script>
+    const audio = document.getElementById("bgm");
+    let audioStarted = false;
+
+    function startAudioOnce() {
+      if (!audioStarted) {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play().catch(err => console.warn("Blocked:", err));
+        audioStarted = true;
+
+        setTimeout(() => {
+          const fadeOut = setInterval(() => {
+            if (audio.volume > 0.05) {
+              audio.volume -= 0.05;
+            } else {
+              audio.volume = 0;
+              clearInterval(fadeOut);
+              audio.pause();
+            }
+          }, 300);
+        }, 3000);
+
+        document.removeEventListener("click", startAudioOnce);
+        document.removeEventListener("touchstart", startAudioOnce);
+      }
+    }
+
+    document.addEventListener("click", startAudioOnce);
+    document.addEventListener("touchstart", startAudioOnce);
+  </script>
+
+  <div class="bg-white p-6 rounded-2xl shadow-lg max-w-2xl w-full text-center animate-fade-in">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-2">🦋 ผีเสื้อของคุณคือ...</h1>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">"Lunar Dream"</h2>
+    <img src="../images/lunar-dream.png" alt="Lunar Dream" class="mx-auto w-48 h-48 butterfly-shadow mb-6">
+
+    <p class="text-gray-700 leading-relaxed mb-6">
+      แสงจันทร์ในใจคุณไม่เคยดับ<br>
+      แม้โลกจะมืดมิด คุณยังมองเห็นทางของตัวเอง<br>
+      ความฝันของคุณไม่สว่างไสวเพราะใคร แต่เพราะคุณไม่เคยหยุดเชื่อในแสงของตัวเอง
+    </p>
+
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-4">
+      <p class="text-indigo-700 font-medium">
+        คุณคือความหวังที่เรืองรองในความเงียบงันของราตรี
+      </p>
+    </div>
+    <a href="/shop/lunar-dream" class="inline-block mt-2 px-6 py-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition">
+      สั่งซื้อคอลเลกชันนี้
+    </a>
+    <a href="../quiz.html" class="inline-block mt-4 px-6 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-800 transition">
+      ลองอีกครั้ง
+    </a>
+  </div>
+
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 1s ease-out;
+    }
+  </style>
+</body>
+</html>
